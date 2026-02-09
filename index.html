@@ -38,9 +38,69 @@
         </div>
     </section>
 
+    <section id="kalkulator" class="container mx-auto py-16 px-4">
+    <div class="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-xl border-t-4 border-indigo-600">
+        <h3 class="text-2xl font-bold mb-2 text-gray-800">📊 Kalkulator HPP Sederhana</h3>
+        <p class="text-gray-500 mb-6 italic text-sm">Hitung harga pokok produksi agar bisnis makin cuan.</p>
+
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-semibold text-gray-700">Total Biaya Bahan & Produksi (Rp)</label>
+                <input type="number" id="biayaBahan" placeholder="Contoh: 500000" class="w-full p-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700">Biaya Operasional (Listrik, Kuota, Ongkir) (Rp)</label>
+                <input type="number" id="biayaOps" placeholder="Contoh: 50000" class="w-full p-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700">Jumlah Produk yang Dihasilkan (Unit/Pcs)</label>
+                <input type="number" id="jumlahUnit" placeholder="Contoh: 100" class="w-full p-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+            </div>
+
+            <button onclick="hitungHPP()" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-lg hover:bg-indigo-700 transition duration-300 shadow-md">
+                HITUNG SEKARANG
+            </button>
+        </div>
+
+        <div id="hasilHPP" class="mt-8 p-6 bg-indigo-50 rounded-xl hidden border border-indigo-100">
+            <p class="text-indigo-800 font-medium">Hasil Perhitungan:</p>
+            <h4 class="text-3xl font-black text-indigo-900 mt-2" id="angkaHasil">Rp 0</h4>
+            <p class="text-xs text-gray-500 mt-2">*HPP adalah modal dasar per unit sebelum ditambah keuntungan.</p>
+        </div>
+    </div>
+</section>
+
+<script>
+    function hitungHPP() {
+        const biayaBahan = parseFloat(document.getElementById('biayaBahan').value) || 0;
+        const biayaOps = parseFloat(document.getElementById('biayaOps').value) || 0;
+        const jumlahUnit = parseFloat(document.getElementById('jumlahUnit').value) || 0;
+
+        if (jumlahUnit > 0) {
+            // Rumus HPP = (Total Biaya) / Jumlah Unit
+            const hpp = (biayaBahan + biayaOps) / jumlahUnit;
+            
+            // Format angka ke Rupiah
+            const formatter = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            });
+
+            document.getElementById('angkaHasil').innerText = formatter.format(hpp);
+            document.getElementById('hasilHPP').classList.remove('hidden');
+        } else {
+            alert("Jumlah unit harus lebih dari 0 ya!");
+        }
+    }
+</script>
+    
     <footer class="bg-gray-900 text-white py-10 text-center">
         <p>&copy; 2026 ProfitLab - Tata'. All Rights Reserved.</p>
     </footer>
 
 </body>
+
 </html>
